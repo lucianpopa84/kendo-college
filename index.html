@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title></title>
+    <link rel="stylesheet" href="styles/kendo.common.min.css" />
+    <link rel="stylesheet" href="styles/kendo.default.min.css" />
+    <link rel="stylesheet" href="styles/kendo.default.mobile.min.css" />
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/kendo.all.min.js"></script>
+</head>
+
+<body>
+    <div id="grid"></div>
+    <script>
+        $(document).ready(function () {
+            $("#grid").kendoGrid({
+                dataSource: {
+                    transport: {
+                        read: {
+                            url: "students.json",
+                            dataType: "json"
+                        }
+                    },
+                    pageSize: 10
+                },
+                height: 550,
+                groupable: true,
+                sortable: {
+                    mode: "multiple"
+                },
+                filterable: {
+                    extra: false,
+                    operators: {
+                        string: {
+                            startswith: "Starts with",
+                            eq: "Is equal to",
+                            neq: "Is not equal to"
+                        }
+                    }
+                },
+                pageable: {
+                    refresh: true,
+                    pageSizes: true,
+                    buttonCount: 5
+                },
+                columns: [{ title: "First Name", field: "firstName" },
+                { title: "Last Name", field: "lastName" },
+                { title: "Average Grade", field: "averageGrade" },
+                { title: "Admission Result", field: "admission",  
+                 template: function(dataItem) {
+      return "<strong>" + (dataItem.averageGrade >= 6 ? 'Admis':'Respins') + "</strong>";
+    } }]
+            });
+            
+        });
+    </script>
+</body>
+
+</html>
